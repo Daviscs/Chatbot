@@ -1,0 +1,6 @@
+{
+    "dbhost" : "testingdb.c3wxlnxzmzbj.us-east-1.rds.amazonaws.com",
+    "dbname" : "cs317",
+    "dbuser" :"cs317",
+    "dbpassword" :"Groupcs317"
+}

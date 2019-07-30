@@ -1,0 +1,314 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "ScheduleAppointment",
+    "version": "2",
+    "intents": [
+      {
+        "description": "Intent to book a dentist's appointment",
+        "name": "MakeAppointment",
+        "version": "35",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:737701909794:function:Testing",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "I would like to book an appointment",
+          "Book an appointment",
+          "Book a {AppointmentType}",
+          "Book an appointment for {Date}",
+          "Book a {AppointmentType} for {Date}",
+          "I need an {AppointmentType} for {Date} at {Time}",
+          "Book an appointment near {Zip}",
+          "I need an {AppointmentType} for {Date} at {Time} near {Zip}",
+          "Book an appointment for {Date} near {Zip}",
+          "Book an appointment with a {DoctorType}",
+          "I need to see a {DoctorType}",
+          "Book an appointment for {Date} with a {DoctorType}",
+          "I need a {AppointmentType}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AppointmentTypeValue",
+            "slotTypeVersion": "4",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What kind of appointment?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "name": "AppointmentType"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "confirmationTime",
+            "slotTypeVersion": "1",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "is this okay"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 11,
+            "name": "ConfirmTime"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.DATE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "When should I schedule your appointment?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "When should I schedule your {AppointmentType}?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "{Time} on what day?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "A {AppointmentType} will take about [ExpectedDuration] minutes. What day works best for you?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 7,
+            "name": "Date",
+            "description": "The date to schedule the appointment"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "DoctorTypes",
+            "slotTypeVersion": "2",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What type of doctor are you looking for?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 10,
+            "name": "DoctorType"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.TIME",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "At what time should I schedule your appointment?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "At what time do you want to schedule the {AppointmentType}?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "At what time on {Date}?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 8,
+            "name": "Time",
+            "description": "The time to schedule the appointment"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.NUMBER",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What city are you in?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 5,
+            "name": "Zip"
+          }
+        ],
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:737701909794:function:Testing",
+          "messageVersion": "1.0"
+        }
+      },
+      {
+        "name": "humanIntervention",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I want to speak to a human",
+          "I would like to speak to a person"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Now transferring your call."
+            }
+          ]
+        }
+      }
+    ],
+    "slotTypes": [
+      {
+        "name": "DoctorTypes",
+        "version": "2",
+        "enumerationValues": [
+          {
+            "value": "physiatrist"
+          },
+          {
+            "value": "plastic surgeon"
+          },
+          {
+            "value": "general practioner"
+          },
+          {
+            "value": "Dentist"
+          },
+          {
+            "value": "surgeon"
+          },
+          {
+            "value": "pharmacist"
+          },
+          {
+            "value": "Doctor"
+          },
+          {
+            "value": "radiologist"
+          },
+          {
+            "value": "family doctor"
+          },
+          {
+            "value": "cardiologist"
+          },
+          {
+            "value": "allergist"
+          },
+          {
+            "value": "pediatrician"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "confirmationTime",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "okay",
+            "synonyms": []
+          },
+          {
+            "value": "no",
+            "synonyms": []
+          },
+          {
+            "value": "nope",
+            "synonyms": []
+          },
+          {
+            "value": "yes",
+            "synonyms": []
+          },
+          {
+            "value": "yeah",
+            "synonyms": []
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "description": "Type of appointment to schedule",
+        "name": "AppointmentTypeValue",
+        "version": "4",
+        "enumerationValues": [
+          {
+            "value": "whitening"
+          },
+          {
+            "value": "Physical"
+          },
+          {
+            "value": "Check-up"
+          },
+          {
+            "value": "Dentist"
+          },
+          {
+            "value": "Cleaning"
+          },
+          {
+            "value": "Doctor"
+          },
+          {
+            "value": "root canal"
+          },
+          {
+            "value": "Eye Care"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      }
+    ],
+    "voiceId": "Salli",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 600,
+    "description": "Bot to book a dentist appointment",
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "I didn't understand you, what would you like me to do?"
+        }
+      ],
+      "maxAttempts": 2
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I am not able to assist at this time"
+        }
+      ]
+    }
+  }
+}
